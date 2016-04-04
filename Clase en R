@@ -1,0 +1,47 @@
+######################EJERCICIO DE CLASE :)################################################################################
+####1) Analizar los datos de las 3 empresas elegidas y elegir los 3 años 
+####que tengan estacionalidad, ciclo o tendencia 
+####2) Calcular con la formula y la funcion de covarianza y correlacion en 
+###La combinacion de las 3 empresas
+require(fpp)
+BIM<-read.csv(("C:\\Users\\SALA-C24\\Documents\\BIMBO.csv"),header = T)
+BIM1<-ts(BIM[,5],frequency = 12,start = 2000)
+CEM<-read.csv(("C:\\Users\\SALA-C24\\Documents\\CEMEX.csv"),header = T)
+CEM1<-ts(CEM[,5],frequency = 12,start = 2000)
+KIM<-read.csv(("C:\\Users\\SALA-C24\\Documents\\KIMBERLY.csv"),header = T)
+KIM1<-ts(KIM[,5],frequency = 12,start = 2000)
+####1) Analizar los datos de las 3 empresas elegidas y elegir los 3 años que tengan estacionalidad, ciclo o tendencia
+seasonplot(CEM1,s=12,year.labels=TRUE, main="Valor de acciones CEMEX",ylab="valor cierre",col=rainbow(12),year.label.left=TRUE,pch=19)
+##Tendencia: es claro que en 2012,2011,2010 las acciones de CEMEX tienen una tendencia negativa
+##Estacionalidad:En ninguno de los periodos se nota una estacionalidad clara
+##Ciclo: En septiembre de 2011, se encuntra un ciclo al obtener una alza abrupta en el precio de las acciones 
+seasonplot(BIM1,s=12,year.labels=TRUE, main="Valor de acciones BIMBO",ylab="valor cierre",col=rainbow(12),year.label.left=TRUE,pch=19)
+##Tendencia: Para 2009,2010 y 2007 la tendencia de las acciones de Bimbo es a ala alza durante todo el periodo
+##Estacionalidad: Bimbo muestra estacionalidad para los meses de Marzo y Julio
+##Ciclo:Las acciones de Bimbo nuo muestran ciclos durante el periodo comprendido de 2008 y 2010
+seasonplot(KIM1,s=12,year.labels=TRUE, main="Valor de acciones KIMBERLY",ylab="valor cierre",col=rainbow(12),year.label.left=TRUE,pch=19)
+##Tendencia: Para 2009,2010 y 2011 la tendencia de las acciones de Kimberly es a ala alza durante todo el periodo
+##Estacionalidad: Kimberly muestra estacionalidad para los meses de Mayo y Septiembre dentro del periodocomprendidp
+##Ciclo:Las acciones de Kimberly nuo muestran ciclos durante el periodo comprendido de 2008 y 2010
+
+#Covarianza CEMEX y BIMBO
+covarianza1=(sum((CEM1-mean(CEM1))*(BIM1-mean(BIM1))))/(length(CEM1)-1)
+cov(CEM1,BIM1)
+#Correlacion CEMEX y BIMBO
+cov(CEM1,BIM1)/(sd(BIM1)*sd(CEM1))
+cor(CEM1,BIM1)
+
+#Covarianza CEMEX y Kimberly
+covarianza2=(sum((CEM1-mean(CEM1))*(KIM1-mean(KIM1))))/(length(CEM1)-1)
+cov(CEM1,KIM1)
+#Correlacion CEMEX y Kimberly
+cov(CEM1,KIM1)/(sd(KIM1)*sd(CEM1))
+cor(CEM1,KIM1)
+
+#Covarianza Kimberly y BIMBO
+covarianza3=(sum((KIM1-mean(KIM1))*(BIM1-mean(BIM1))))/(length(BIM1)-1)
+cov(KIM1,BIM1)
+#Correlacion Kimberly y BIMBO
+cov(BIM1,KIM1)/(sd(KIM1)*sd(BIM1))
+cor(BIM1,KIM1)
+
